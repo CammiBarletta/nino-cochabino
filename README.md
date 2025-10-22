@@ -1,4 +1,4 @@
-# 🧸 Niño Cochabino - E-commerce React
+# 🧸 Nino Cochabino - E-commerce React
 
 Proyecto final del curso React.  
 Incluye:
