@@ -1,0 +1,88 @@
+:root {
+  --color1: #e6546b;  /* Rosa fuerte */
+  --color2: #da8f72;  /* Durazno */
+  --color3: #ffffff;  /* Amarillo suave */
+  --color4: #c9daa4;  /* Verde claro */
+  --color5: #8acbb5;  /* Turquesa */
+}
+
+body {
+  background-color: var(--color3);
+  font-family: Arial, sans-serif;
+}
+
+.productos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Card */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.card-img-container {
+  width: 100%;
+  height: 150px; /* más bajita para que no se vea tan gigante */
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* muestra toda la imagen completa, no la recorta */
+  object-position: center; /* centra la imagen */
+}
+
+/* Texto */
+.card-title {
+  font-size: 1.1rem;
+  color: var(--color1);
+  margin: 10px 0 5px;
+}
+
+.card-precio {
+  font-weight: bold;
+  color: var(--color2);
+  margin-bottom: 10px;
+}
+
+/* Botón */
+.card-btn {
+  background-color: var(--color5);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.card-btn:hover {
+  background-color: var(--color4);
+}
+
+/* Responsivo */
+@media (max-width: 500px) {
+  .card-img-container {
+    height: 150px;
+  }
+  .card-btn {
+    width: 100%;
+  }
+}
