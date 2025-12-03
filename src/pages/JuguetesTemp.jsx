@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { CartContext } from "../components/CartContext";
+import { Link, useNavigate } from "react-router-dom";
+import { CartContext } from "../contexts/CartContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function Juguetes() {
   const [productos, setProductos] = useState([]);
   const { addToCart } = useContext(CartContext);
+
+  const { usuario } = useAuthContext();   //  acá sabemos si es admin o no
+  const navigate = useNavigate();         //  para ir a editar / eliminar
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -15,7 +19,6 @@ export default function Juguetes() {
         if (!res.ok) throw new Error("Error al traer datos de MockAPI");
         const data = await res.json();
 
-        // Normalizo para que todos tengan "avatar"
         const normalizados = data.map((p) => ({
           ...p,
           avatar: p.avatar || p.imagen || p.image || "",
@@ -24,7 +27,6 @@ export default function Juguetes() {
         setProductos(normalizados);
       } catch (error) {
         console.error(error);
-        // fallback a datos locales si MockAPI falla
         setProductos([
           {
             id: 1,
@@ -55,30 +57,37 @@ export default function Juguetes() {
   }, []);
 
   return (
-    <div className="productos-container">
-      {productos.map((prod) => (
-        <div key={prod.id} className="card">
-          <img
-          src={prod.avatar || prod.imagen || ""}
-             alt={prod.nombre}
-            className="card-img"
-                              />
-          <h3 className="card-title">{prod.nombre}</h3>
-          <p className="card-precio">${prod.precio}</p>
+   <div className="productos-container">
+  {productos.map((prod, index) => (
+    <div
+      key={prod.id}
+      className="card"
+      style={{
+        animationDelay: `${0.1 * (index + 1)}s`
+      }}
+    >
+      <img
+        src={prod.avatar || prod.imagen || ""}
+        alt={prod.nombre}
+        className="card-img"
+      />
+      <h3 className="card-title">{prod.nombre}</h3>
+      <p className="card-precio">${prod.precio}</p>
 
-          <div
-            style={{
-              display: "flex",
-              gap: 8,
-              justifyContent: "center",
-              marginTop: 8,
-            }}
-          >
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          justifyContent: "center",
+          marginTop: 8,
+          flexWrap: "wrap",
+        }}
+      >
+
             <button className="card-btn" onClick={() => addToCart(prod)}>
               Agregar al carrito
             </button>
 
-            {/*  Enlace a ruta dinámica */}
             <Link
               to={`/juguetes/${prod.id}`}
               className="btn btn-link"
@@ -86,6 +95,39 @@ export default function Juguetes() {
             >
               Ver detalle
             </Link>
+
+            {/* 🔐 Botones solo para ADMIN */}
+            {usuario?.nombre === "admin" && (
+              <div
+                style={{
+                  display: "flex",
+                  gap: 6,
+                  marginTop: 8,
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <button
+                  className="card-btn"
+                  style={{ backgroundColor: "#6c757d" }}
+                  onClick={() =>
+                    navigate("/formulario-producto", { state: { producto: prod } })
+                  }
+                >
+                  Editar
+                </button>
+
+                <button
+                  className="card-btn"
+                  style={{ backgroundColor: "#dc3545" }}
+                  onClick={() =>
+                    navigate("/eliminar-producto", { state: { producto: prod } })
+                  }
+                >
+                  Eliminar
+                </button>
+              </div>
+            )}
           </div>
         </div>
       ))}

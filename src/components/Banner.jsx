@@ -1,27 +1,36 @@
 import React from "react";
-import bannerImg from "../assets/banner_halloween.png";
+ import videoBanner from "../assets/banner_video.mp4";
 
 export default function Banner() {
-  const styles = {
+const styles = {
     container: {
-      width: "90%",
-      maxWidth: "1200px",
-      margin: "20px auto", // centrado horizontal con espacio arriba y abajo
-      borderRadius: "12px",
-      overflow: "hidden",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-    },
-    image: {
       width: "100%",
-      height: "auto",
-      display: "block",
-      objectFit: "cover",
+      margin: "0",
+      padding: "0",
+      overflow: "hidden",
+      position: "relative", // Necesario para evitar huecos extraños
+      // Si quieres una altura fija (ej. tipo cine), descomenta esto:
+     height: "600px", 
+    },
+    video: {
+      width: "100%",
+      height: "100%",    // Se adapta al contenedor
+      objectFit: "cover", // ESTO ES CLAVE: evita que el video se deforme o deje bordes negros
+      display: "block",   // Quita el pequeño margen que a veces dejan los videos inline
     },
   };
 
   return (
     <div style={styles.container}>
-      <img src={bannerImg} alt="Banner Halloweek" style={styles.image} />
+    
+      <video
+        src={videoBanner}
+        style={styles.video}
+        autoPlay       // Se reproduce solo
+        loop           // Se repite infinitamente
+        muted          // OBLIGATORIO para que funcione el autoplay en Chrome/Edge
+        playsInline    // OBLIGATORIO para que funcione bien en iPhone
+      />
     </div>
   );
 }

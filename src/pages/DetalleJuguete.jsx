@@ -1,7 +1,7 @@
 // src/pages/DetalleJuguete.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CartContext } from "../components/CartContext";
+import { CartContext } from "../contexts/CartContext";
 
 const FALLBACK_IMG = "https://via.placeholder.com/600x400?text=Sin+imagen";
 

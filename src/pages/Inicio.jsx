@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
-import { CartContext } from "../components/CartContext"; // si querés agregar al carrito
+import { CartContext } from "../contexts/CartContext"; // si querés agregar al carrito
 
 export default function Inicio() {
   const [productos, setProductos] = useState([]);
@@ -18,11 +18,15 @@ export default function Inicio() {
   const productosPreview = productos.slice(0, 3);
 
   return (
+    <>
+          <Banner />
+
     <div className="inicio-container">
-      <Banner />
 
       <section className="productos-preview">
-        <h2>¡Productos destacados!</h2>
+        <br></br>
+        <h2>      ¡Productos destacados!</h2>
+
         <div className="productos-container">
           {productosPreview.map((prod) => (
             <div key={prod.id} className="card">
@@ -40,11 +44,14 @@ export default function Inicio() {
             </div>
           ))}
         </div>
-
+    
         <Link to="/Juguetes" className="btn-primary">
           Más info
         </Link>
       </section>
     </div>
+       </>
   );
+ 
 }
+
