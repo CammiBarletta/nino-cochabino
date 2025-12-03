@@ -12,6 +12,7 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 // Páginas
@@ -96,9 +97,21 @@ export default function App() {
   }
 />
           </Routes>
+          <>
+     
+</>
+
         </main>
 
         <Footer />
+        <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
         
         </ProductsProvider>
 

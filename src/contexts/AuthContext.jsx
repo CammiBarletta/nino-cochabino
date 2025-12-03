@@ -1,18 +1,23 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-// Crear el contexto de autenticación
 export const AuthContext = createContext();
 
-// Proveedor de autenticación
 export function AuthProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
 
-  // Verificar token al cargar la aplicación
+  // 🟦 1) Recuperar usuario de localStorage al iniciar
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUsuario(JSON.parse(savedUser));
+    }
+  }, []);
+
+  //  2) Recuperar token falso si querés mantenerlo
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const emailGuardado = localStorage.getItem("authEmail");
     if (token) {
-      // Extraemos el nombre del token falso para persistir la sesión visualmente
       const username = token.replace("fake-token-", "");
       setUsuario({
         nombre: username,
@@ -21,38 +26,39 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  // Función para iniciar sesión
+  //  3) Iniciar sesión (login persistente real)
   const iniciarSesion = (username) => {
-    const token = `fake-token-${username}`;
-    localStorage.setItem("authToken", token);
-
-    const emailGuardado = localStorage.getItem("authEmail");
-    setUsuario({
+    const nuevoUsuario = {
       nombre: username,
-      email: emailGuardado || "",
-    });
+      email: "", // o lo que corresponda
+    };
+
+    // Persistir correctamente
+    localStorage.setItem("user", JSON.stringify(nuevoUsuario));
+    localStorage.setItem("authToken", `fake-token-${username}`);
+
+    setUsuario(nuevoUsuario);
   };
 
-  // Función para cerrar sesión
+  //  4) Cerrar sesión (limpio todo)
   const cerrarSesion = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authEmail");
+    localStorage.removeItem("user");
     setUsuario(null);
   };
 
   const value = {
-    // --- NOMBRES ORIGINALES (Español) ---
     usuario,
     iniciarSesion,
     cerrarSesion,
-    
-    // --- ALIAS PARA COMPATIBILIDAD CON NAVBAR (Inglés) ---
-    // Esto conecta tu Navbar que pide 'user' con la variable 'usuario'
-    user: usuario, 
+
+    // Alias para compatibilidad con Navbar que usa "user" y "logout"
+    user: usuario,
     login: iniciarSesion,
     logout: cerrarSesion,
 
-    isAuthenticated: !!usuario, 
+    isAuthenticated: !!usuario,
   };
 
   return (
@@ -62,7 +68,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Hook personalizado
 export function useAuthContext() {
   const context = useContext(AuthContext);
   if (!context) {
@@ -71,5 +76,4 @@ export function useAuthContext() {
   return context;
 }
 
-// Alias para compatibilidad con componentes que usan useAuth()
 export const useAuth = useAuthContext;

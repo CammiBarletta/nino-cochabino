@@ -4,6 +4,8 @@ import './index.css'
 import Ecommerce from './App'
 import { AuthProvider } from "./contexts/AuthContext";
 import {BrowserRouter as Router} from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 
 createRoot(document.getElementById("root")).render(

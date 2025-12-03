@@ -873,6 +873,7 @@ footer {
 /* Usuario */
 .user-logged-in {
   display: flex;
+  color: #ffece6;
   align-items: center;
   gap: 10px;
 }
@@ -880,7 +881,7 @@ footer {
 .user-greeting {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #555;
+  color: #ffece6;
 }
 
 .logout-btn {
