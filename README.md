@@ -1,4 +1,4 @@
-# Cochabino - E-commerce de Juguetes
+# Nino Cochabino - E-commerce de Juguetes
 
 Proyecto desarrollado en React como trabajo práctico integrador del curso.  
 El objetivo es simular un pequeño e-commerce de juguetes con catálogo, carrito de compras y área de administración para gestionar productos.
@@ -100,6 +100,8 @@ El objetivo es simular un pequeño e-commerce de juguetes con catálogo, carrito
 ## Requisitos previos
 
 - Node.js y npm instalados.
+
+## Programador Jr Camila Barletta.
 
 
 
