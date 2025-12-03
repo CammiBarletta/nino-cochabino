@@ -775,6 +775,7 @@ footer {
   box-shadow: 0 0 3px var(--color1);
 }
 
+
 .login-container button {
   background-color: var(--color1);
   color: white;
@@ -850,6 +851,16 @@ footer {
 }
 
 
+.paginacion-btn {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px !important;
+  font-size: 16px;
+}
 
 
 

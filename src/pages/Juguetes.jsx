@@ -150,6 +150,7 @@ export default function Juguetes() {
                       flexWrap: "wrap",
                     }}
                   >
+                      
                     <button
                       className="card-btn"
                       onClick={() => handleAddToCart(prod)}
@@ -228,17 +229,15 @@ export default function Juguetes() {
             {productosFiltrados.length > productosPorPagina && (
               <div className="d-flex justify-content-center my-4">
                 {Array.from({ length: totalPaginas }, (_, index) => (
-                  <button
-                    key={index + 1}
-                    className={`btn mx-1 ${
-                      paginaActual === index + 1
-                        ? "btn-primary"
-                        : "btn-outline-primary"
-                    }`}
-                    onClick={() => cambiarPagina(index + 1)}
-                  >
-                    {index + 1}
-                  </button>
+               <button
+             key={index + 1}
+            className={`btn paginacion-btn mx-1 ${
+             paginaActual === index + 1 ? "btn-primary" : "btn-outline-primary"
+                }`}
+            onClick={() => cambiarPagina(index + 1)}
+          >
+            {index + 1}
+            </button>
                 ))}
               </div>
             )}

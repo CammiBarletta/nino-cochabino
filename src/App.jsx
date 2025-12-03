@@ -17,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Páginas
 import Inicio from "./pages/Inicio";
-import Juguetes from "./pages/JuguetesTemp";
+import Juguetes from "./pages/Juguetes";
 import DetalleJuguete from "./pages/DetalleJuguete";
 import Login from "./pages/Login";
 import Carrito from "./components/CarritoTotal";
