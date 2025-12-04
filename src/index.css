@@ -5,39 +5,38 @@
   --color4: #c9daa4;  /* Verde claro */
   --color5: #8acbb5;  /* Turquesa */
 }
+/* ================= NAVBAR SOBRE EL DEGRADÉ ================= */
 
-/* --- NAVBAR LIMPIO Y UNIFICADO --- */
 .navbar {
   width: 100%;
-  max-width: 1200px;
-  margin: 10px auto 0;
-  padding: 0.8rem 2.5rem;
-  border-radius: 12px;
-  background: linear-gradient(90deg, var(--color1), var(--color2)); /* 👈 ahora sí degradé */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  background: rgba(255, 255, 255, 0.18);  /* glass sobre el degradé */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 8px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 24px;
-  
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  position: relative;      /* importante para el menú desplegable */
+  min-height: 64px;
 }
 
-
-/* Contenedor izquierda: botón + links */
+/* IZQUIERDA: botón + links */
 .nav-left {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-/* Botón hamburguesa (solo móvil) */
+/* Botón hamburguesa */
 .menu-btn {
-  display: none;
+  display: none;           /* solo mobile lo muestra */
   background: none;
   border: none;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   cursor: pointer;
-  color: var(--color1);
+  color: #fff;
 }
 
 /* Links del menú */
@@ -49,19 +48,17 @@
   padding: 0;
 }
 
-
-/* Enlace admin un poquito distinto (si querés remarcarlo) */
-.nav-links li a.admin-link {
-  color: #b71c1c;
-}
 .nav-links li a {
   text-decoration: none;
-  color: #fff;                  
+  color: #fff;
   font-weight: 600;
   font-size: 0.95rem;
   padding: 6px 10px;
   border-radius: 999px;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .nav-links li a.active {
@@ -75,44 +72,53 @@
   transform: translateY(-1px);
 }
 
+/* Enlace admin diferenciado (opcional) */
+.nav-links li a.admin-link {
+  color: #b71c1c;
+}
 
-/* Derecha: usuario + carrito */
+/* DERECHA: usuario + carrito */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding-right: 30px;
+  gap: 20px;
 }
 
-/* Bloque de usuario */
+/* Usuario */
 .user-controls {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.user-greeting,
 .user-controls span {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #555;
+  color: #ffece6;
 }
 
 .logout-btn {
-  background-color: transparent;
-  border: 1px solid #ccc;
+  background-color: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.5);
   border-radius: 999px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   cursor: pointer;
   font-size: 0.8rem;
-  color: #555;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  color: #ffece6;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.15s ease;
 }
 
 .logout-btn:hover {
-  background-color: var(--color1);
-  border-color: var(--color1);
-  color: #fff;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: var(--color1);
+  transform: translateY(-1px);
 }
 
 /* Botón "Iniciar sesión" */
@@ -141,8 +147,15 @@
 }
 
 .cart-img {
-  width: 32px;
+  width: 28px;
   height: auto;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.cart-container:hover .cart-img {
+  transform: translateY(-1px) scale(1.02);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
 .cart-count {
@@ -158,7 +171,7 @@
   border: 2px solid #fff;
 }
 
-/* Dropdown del mini-cart */
+/* MiniCart desplegable */
 .minicart-wrapper {
   position: absolute;
   right: 0;
@@ -166,79 +179,93 @@
   z-index: 1000;
 }
 
-/* --- Responsive navbar --- */
-@media (max-width: 768px) {
-  .navbar {
-    border-radius: 0;
-    margin: 0;
-  }
+/* ================= NAVBAR - MOBILE ================= */
 
+@media (max-width: 768px) {
+  /* La barra sigue en fila, pero el menú se "cuelga" debajo */
   .menu-btn {
     display: block;
   }
-  .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
 
-.user-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.user-greeting,
-.user-controls span {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #ffece6;
-}
-
-  .user-greeting,
+  /* Ocultamos el texto de saludo para ganar espacio */
   .user-controls span {
-    display: none; /* en mobile solo ves login/carro, no texto largo */
+    display: none;
+  }
+
+ .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0 18px;
+    background: linear-gradient(90deg, var(--color1), var(--color2));
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    display: none;
+    border-radius: 0 0 16px 16px;
+    z-index: 1200;
+}
+.nav-links li a {
+    color: #030303 !important;
+}
+
+@media (max-width: 768px) {
+    .nav-links li a:hover {
+        background-color: rgba(255,255,255,0.4);
+        color: #000 !important;
+    }
+}
+
+
+
+  .nav-links.open {
+    display: flex;          /* cuando menuOpen = true */
+  }
+
+  .nav-right {
+    gap: 12px;
+    padding-right: 8px;
+  }
+}
+
+/* MiniCart un poco más chico en móviles chicos */
+@media (max-width: 500px) {
+  .minicart-wrapper .mini-cart {
+    width: 90%;
+    right: 5%;
   }
 }
 
 
-/* Botón hamburguesa */
-.menu-btn {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  margin-right: 10px;
-  cursor: pointer;
-  color: #fff;
-}
 
-/* Carrito */
-.cart-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
 
-.cart-img {
-  width: 40px;
-  height: 40px;
-}
 
-.cart-count {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
 
-/* Mini-cart */
+
+
+
+
+
+
+
+ 
+
+
+  /* Ocultamos el "Hola, usuario" para ganar espacio */
+  .user-controls span {
+    display: none;
+  }
+
+
+
+
+
+/* =========================================================
+   MINI-CART (cuadro del carrito)
+   ========================================================= */
+
 .mini-cart {
   position: absolute;
   right: 0;
@@ -289,73 +316,13 @@
   border-radius: 6px;
   object-fit: contain;
   margin-right: 8px;
-}
-
-/* Total y botón limpiar */
-.mini-cart-total {
-  font-weight: bold;
-  color: var(--color1);
-  margin-top: 8px;
-  text-align: right;
-}
-
-.mini-cart-clear {
-  background-color: var(--color1);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  width: 100%;
-  padding: 10px;
-  margin-top: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.25s;
-   max-width: 350px;
-}
-
-.mini-cart-clear:hover {
-  background-color: var(--color2);
-}
-
-.mini-cart-item img {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 4px;
   border-radius: 8px;
   backdrop-filter: brightness(1.1);
 }
 
-.mini-cart-pay {
-  background-color: var(--color1);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  width: 100%;
-  padding: 10px;
-  margin-top: 12px;
-  font-weight: bold;  
-  cursor: pointer;
-  transition: background-color 0.25s;
-  max-width: 350px;
-}
-
-.mini-cart-pay:hover {
-  background-color: #c34457; 
-}
-
-
-
-
-.clear-btn {
-  margin-top: 10px;
-  width: 100%;
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 8px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-/* ---------- Mini-cart: info interna ---------- */
+/* Info interna */
 .mini-cart-info {
   display: flex;
   flex-direction: column;
@@ -399,7 +366,7 @@
   text-align: center;
 }
 
-/* Total y botón limpiar */
+/* Total y botones */
 .mini-cart-total {
   font-weight: bold;
   margin-top: 10px;
@@ -407,44 +374,53 @@
   color: var(--color1);
 }
 
-.mini-cart-clear {
+.mini-cart-clear,
+.mini-cart-pay {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   margin-top: 10px;
   border: none;
-  background-color: var(--color1);
-  color: #fff;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.2s;
+  max-width: 350px;
+}
+
+.mini-cart-clear {
+  background-color: var(--color1);
+  color: #fff;
 }
 
 .mini-cart-clear:hover {
   background-color: var(--color2);
 }
 
-/* Ajuste para que el mini-cart no se salga de pantalla en móvil */
-@media (max-width: 500px) {
-  .mini-cart {
-    width: 90%;
-    right: 5%;
-    top: 50px;
-  }
-  .mini-cart-qty button {
-    width: 30px;
-    height: 30px;
-  }
+.mini-cart-pay {
+  background-color: var(--color1);
+  color: #fff;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .menu-btn {
-    display: block;
-  }
+.mini-cart-pay:hover {
+  background-color: #c34457;
 }
 
-/* ---------- Header / Logo responsive ---------- */
+/* Botón rojo viejo de clear (por si lo usás en otro lado) */
+.clear-btn {
+  margin-top: 10px;
+  width: 100%;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* =========================================================
+   HEADER / LOGO
+   ========================================================= */
+
 .header-main {
   width: 100%;
   background: linear-gradient(90deg, var(--color1), var(--color2));
@@ -454,14 +430,13 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Contenedor interno centrado con max-width */
 .header-inner {
   max-width: 1300px;
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* logo left, navbar right on desktop */
+  justify-content: space-between;
   gap: 20px;
 }
 
@@ -470,25 +445,24 @@
   display: inline-block;
   text-decoration: none;
 }
+
 .header-main .logo-img {
   display: block;
   width: auto;
-  max-height: 140px;     /* límite máximo en desktop */
-  height: auto;          /* preserva proporción */
+  max-height: 140px;
+  height: auto;
   transition: transform 0.18s ease, max-height 0.18s ease;
 }
 
-/* variante más chica  */
 .header-main .logo-img.small {
   max-height: 110px;
 }
 
-/* pequeño efecto al pasar el mouse ) */
 .logo-link:hover .logo-img {
   transform: translateY(-3px);
 }
 
-/* Asegurarse que el navbar ocupe el espacio restante */
+/* Navbar ocupando el espacio restante dentro del header */
 .header-inner > .navbar {
   flex: 1 1 auto;
   display: flex;
@@ -496,32 +470,34 @@
   align-items: center;
 }
 
-/* ---------- Responsive: mover logo encima en pantallas chicas ---------- */
+/* Responsive header */
 @media (max-width: 768px) {
   .header-inner {
-    flex-direction: column;   /* logo encima, navbar abajo */
+    flex-direction: column;
     align-items: center;
     padding: 12px 16px;
   }
 
   .header-main .logo-img {
-    max-height: 120px; /* tamaño en móvil */
+    max-height: 120px;
     margin-bottom: 10px;
   }
 
-  /* ajustar navbar para que ocupe 100% y quede centrado */
   .header-inner > .navbar {
     width: 100%;
     justify-content: center;
   }
 }
 
-/* Ajuste extra para pantallas muy pequeñas */
 @media (max-width: 420px) {
   .header-main .logo-img {
     max-height: 90px;
   }
 }
+
+/* =========================================================
+   BOTONES GENERALES
+   ========================================================= */
 
 .btn-primary {
   display: inline-block;
@@ -534,22 +510,21 @@
   font-weight: bold;
   transition: background-color 0.2s;
 }
-/* Centrar el botón "Más info" sin que se agrande */
+
 .inicio-container .btn-primary {
   display: inline-block;
-  margin-top: 30px;    
-  
-
+  margin-top: 30px;
 }
-
 
 .btn-primary:hover {
   background-color: #da8f72;
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
+/* =========================================================
+   LAYOUT GENERAL
+   ========================================================= */
 
-/* reset básico y centrado */
 body {
   margin: 0;
   padding: 0;
@@ -558,44 +533,42 @@ body {
   box-sizing: border-box;
 }
 
-/* ========== AJUSTES DE LAYOUT GENERAL ========== */
 .main-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
-  min-height: 80vh; /* deja espacio antes del footer */
+  min-height: 80vh;
   box-sizing: border-box;
 }
 
-/* Asegura que el footer nunca se superponga */
 footer {
   position: relative;
   z-index: 10;
   margin-top: 60px;
 }
 
-/* 1. CONTENEDOR PRINCIPAL DE LA SECCIÓN */
-/* (Este es el que no encontrabas) */
+/* =========================================================
+   PRODUCTOS / CARDS
+   ========================================================= */
+
+/* Contenedor principal de sección preview */
 .productos-preview {
-  text-align: center;       /* Centra el Título h2 y el Botón "Más info" */
+  text-align: center;
   width: 100%;
-  max-width: 1200px;        /* Evita que se estire demasiado en pantallas gigantes */
-  margin: 0 auto;           /* Centra todo el bloque en la página */
-  padding: 0 20px;          /* Un poco de aire a los costados en móviles */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-/* 2. LA GRILLA DE PRODUCTOS */
+/* Grilla de productos */
 .productos-container {
   display: grid;
-  /* Crea columnas de mínimo 250px (un poco más ancho para que se vea mejor) */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-  gap: 30px;                /* Espacio entre tarjetas */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
   padding: 40px 0;
-  
-  justify-content: center;  /* Si sobran columnas, centra las que hay */
-  justify-items: center;    /* Asegura que cada card esté centrada en su celda */
+  justify-content: center;
+  justify-items: center;
 }
-
 
 .card {
   background-color: #fff;
@@ -617,7 +590,6 @@ footer {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
-/* Imagen más proporcionada */
 .card-img-container {
   width: 100%;
   height: 160px;
@@ -634,7 +606,7 @@ footer {
   object-fit: contain;
 }
 
-/* Texto más compacto */
+/* Texto */
 .card-title {
   font-size: 1rem;
   margin: 6px 0 2px;
@@ -647,7 +619,7 @@ footer {
   margin-bottom: 8px;
 }
 
-/* Botones uniformes */
+/* Botones card */
 .card-btn {
   background-color: var(--color5);
   color: #fff;
@@ -660,37 +632,30 @@ footer {
   transition: background-color 0.2s ease;
 }
 
-/* Botón "Ver detalle" igual que el de agregar al carrito */
+.card-btn:hover {
+  background-color: var(--color4);
+}
+
+/* Link "Ver detalle" */
 .btn-link {
   background-color: var(--color5);
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 8px 10px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   transition: background-color 0.2s ease;
   text-decoration: none;
   display: inline-block;
-  padding: 8px 10px;
-  font-size: 0.85rem;
-  border-radius: 6px;
-
 }
 
 .btn-link:hover {
-  background-color: var(--color4);
+  background-color: var(--color2);
 }
 
-
-.card-btn:hover {
-  background-color: var(--color4);
-}
-
-
-
-/* Ajuste móvil */
+/* Ajuste móvil cards */
 @media (max-width: 600px) {
   .productos-container {
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -701,6 +666,7 @@ footer {
   }
 }
 
+/* Animación entrada cards */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -716,14 +682,7 @@ footer {
   animation: fadeInUp 0.6s ease both;
 }
 
-.card:nth-child(1) { animation-delay: 0.1s; }
-.card:nth-child(2) { animation-delay: 0.2s; }
-.card:nth-child(3) { animation-delay: 0.3s; }
-.card:nth-child(4) { animation-delay: 0.4s; }
-.card:nth-child(5) { animation-delay: 0.5s; }
-.card:nth-child(6) { animation-delay: 0.6s; }
-
-/* ========== Transición entre páginas ========== */
+/* Transición entre páginas */
 .page-transition {
   opacity: 0;
   transform: translateY(10px);
@@ -734,6 +693,10 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
 .login-container {
   display: flex;
@@ -775,7 +738,6 @@ footer {
   box-shadow: 0 0 3px var(--color1);
 }
 
-
 .login-container button {
   background-color: var(--color1);
   color: white;
@@ -795,6 +757,11 @@ footer {
   font-size: 0.9rem;
   text-align: center;
 }
+
+/* =========================================================
+   CHECKOUT
+   ========================================================= */
+
 .checkout-container {
   display: flex;
   flex-direction: column;
@@ -837,19 +804,10 @@ footer {
 .checkout-back:hover {
   background-color: #c34457;
 }
-/* --- ESTILOS DEL NAVBAR --- */
-.navbar {
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  padding: 0.5rem 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  height: 70px;
-  display: flex;
-  align-items: center;
-}
 
+/* =========================================================
+   PAGINACIÓN
+   ========================================================= */
 
 .paginacion-btn {
   min-width: 40px;
@@ -860,149 +818,4 @@ footer {
   justify-content: center;
   border-radius: 8px !important;
   font-size: 16px;
-}
-
-
-
-.link-item {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  font-size: 1rem;
-  transition: color 0.3s;
-}
-
-.link-item:hover, .link-item.active {
-  color: #e91e63;
-}
-
-.admin-link {
-  color: #d32f2f;
-}
-
-
-/* Usuario */
-.user-logged-in {
-  display: flex;
-  color: #ffece6;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-greeting {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #ffece6;
-}
-
-.logout-btn {
-  background-color: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 999px;
-  padding: 4px 12px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  color: #ffece6;
-  font-weight: 600;
-  backdrop-filter: blur(4px);
-  transition:
-    background-color 0.18s ease,
-    color 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.15s ease;
-}
-
-.logout-btn:hover {
-  background-color: #ffffff;
-  border-color: #ffffff;
-  color: var(--color1);
-  transform: translateY(-1px);
-}
-
-
-
-/* Carrito */
-.cart-section {
-  position: relative;
-}
-
-.cart-icon-wrapper {
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.cart-img {
-  width: 26px;
-  height: auto;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
-
-.cart-container:hover .cart-img {
-  transform: translateY(-1px) scale(1.02);
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-}
-
-
-.cart-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: #e91e63;
-  color: white;
-  font-size: 0.75rem;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  border: 2px solid white;
-}
-
-/* Dropdown MiniCart */
-.minicart-dropdown {
-  position: absolute;
-  right: 0;
-  top: 45px;
-  background: white;
-  border: 1px solid #eee;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  border-radius: 8px;
-  width: 300px;
-  z-index: 1001;
-  overflow: hidden;
-}
-
-/* Móvil */
-.menu-btn {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .menu-btn { display: block; }
-
-  .user-greeting { display: none; }
-}   
-.login-link {
-  text-decoration: none;
-  background-color: var(--color1);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.login-link:hover {
-  background-color: #da8f72;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
