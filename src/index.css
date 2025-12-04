@@ -21,12 +21,19 @@
   position: relative;      /* importante para el menú desplegable */
   min-height: 64px;
 }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding-right: 16px;   /* un toquecito, no 50px para que no quede raro */
+}
+
 
 /* IZQUIERDA: botón + links */
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 6px;
 }
 
 /* Botón hamburguesa */
@@ -46,6 +53,7 @@
   gap: 18px;
   margin: 0;
   padding: 0;
+  
 }
 
 .nav-links li a {
@@ -77,12 +85,6 @@
   color: #b71c1c;
 }
 
-/* DERECHA: usuario + carrito */
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
 
 /* Usuario */
 .user-controls {
@@ -144,7 +146,9 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  flex-shrink: 0;    /* 💊 NO te achiques nunca, carrito */
 }
+
 
 .cart-img {
   width: 28px;
@@ -192,7 +196,7 @@
     display: none;
   }
 
- .nav-links {
+  .nav-links {
     position: absolute;
     top: 100%;
     left: 0;
@@ -206,59 +210,54 @@
     display: none;
     border-radius: 0 0 16px 16px;
     z-index: 1200;
-}
-.nav-links li a {
+  }
+
+  .nav-links li a {
     color: #030303 !important;
-}
+  }
 
-@media (max-width: 768px) {
-    .nav-links li a:hover {
-        background-color: rgba(255,255,255,0.4);
-        color: #000 !important;
-    }
-}
-
-
+  .nav-links li a:hover {
+    background-color: rgba(255,255,255,0.4);
+    color: #000 !important;
+  }
 
   .nav-links.open {
-    display: flex;          /* cuando menuOpen = true */
-  }
-
-  .nav-right {
-    gap: 12px;
-    padding-right: 8px;
-  }
-}
-
-/* MiniCart un poco más chico en móviles chicos */
-@media (max-width: 500px) {
-  .minicart-wrapper .mini-cart {
-    width: 90%;
-    right: 5%;
+    display: flex;
   }
 }
 
 
 
 
+/* ===== MiniCart mejorado en pantallas chicas ===== */
+@media (max-width: 768px) {
+  /* El contenedor pasa a ser fijo, centrado y debajo del navbar */
+  .minicart-wrapper {
+    position: fixed;
+    top: 80px;              /* un poco debajo del header */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 1500;          /* por encima del navbar y contenido */
+  }
+
+  /* La caja del carrito se adapta al alto de la pantalla */
+  .mini-cart {
+    width: 92%;
+    max-height: calc(100vh - 110px);  /* deja margen con navbar y borde inferior */
+    overflow-y: auto;                 /* si hay muchos items → scroll interno */
+  }
+}
 
 
 
-
-
-
-
-
-
- 
 
 
   /* Ocultamos el "Hola, usuario" para ganar espacio */
   .user-controls span {
     display: none;
   }
-
-
 
 
 
@@ -819,3 +818,4 @@ footer {
   border-radius: 8px !important;
   font-size: 16px;
 }
+
